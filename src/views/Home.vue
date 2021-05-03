@@ -296,7 +296,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css");
 body {
   font-family: "Libre Baskerville", serif;
