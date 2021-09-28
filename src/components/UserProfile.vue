@@ -75,13 +75,8 @@ export default {
   methods: {
     deleteUser(userid) {
       const issued_user = localStorage.loggedUser;
-      this.axios
-        .delete(
-          "https://br-eam-backend.herokuapp.com/delete_user/" +
-            userid +
-            "/" +
-            issued_user
-        )
+      this.$axios
+        .delete("/delete_user/" + userid + "/" + issued_user)
         .then(() => {
           //   this.logout();
         });
@@ -95,13 +90,9 @@ export default {
       }
     },
     getUser() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/user/" + localStorage.loggedUser
-        )
-        .then((res) => {
-          return res.data;
-        });
+      this.$axios.get("/user/" + localStorage.loggedUser).then((res) => {
+        return res.data;
+      });
     },
   },
 };

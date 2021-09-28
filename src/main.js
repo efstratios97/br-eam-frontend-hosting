@@ -60,6 +60,11 @@ const store = createStore({
         }
     }
 })
+const instance = axios.create({
+    // baseURL: process.env.NODE_ENV == 'development' ? '' : ''
+    baseURL: 'http://localhost:8081',
+    timeout: 60 * 4 * 1000
+});
 const app = createApp(App)
 app.use(PrimeVue);
 app.component("InputText", InputText);
@@ -89,5 +94,6 @@ app.use(router)
 app.use(ToastService);
 app.use(BootstrapIconsPlugin);
 app.use(VueAxios, axios)
+app.config.globalProperties.$axios = instance;
 app.mount('#app')
 

@@ -38,37 +38,30 @@ export default {
       }
     },
     login() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/user/auth?email=" +
-            this.email +
-            "&passwd=" +
-            this.password
-        )
+      this.$axios
+        .get("/user/auth?email=" + this.email + "&passwd=" + this.password)
         .then((res) => {
           this.users = res.data;
           this.allUsers = res.data;
           localStorage.token = res.data.token;
-          this.axios
-            .get("https://br-eam-backend.herokuapp.com/users")
-            .then((res) => {
-              this.users = res.data;
-              localStorage.loggedUser = this.users.filter(
-                this.findUser
-              )[0].user_id;
-              for (let i = 0; i < this.users.length; i++) {
-                if (this.users[i]["user_id"] === localStorage.loggedUser) {
-                  this.$toast.add({
-                    severity: "success",
-                    summary: "Welcome " + this.users[i]["first_name"],
-                    detail: "You successfully logged in",
-                    life: 3000,
-                  });
-                  this.users = null;
-                  this.$router.push("/mainmenu");
-                }
+          this.$axios.get("/users").then((res) => {
+            this.users = res.data;
+            localStorage.loggedUser = this.users.filter(
+              this.findUser
+            )[0].user_id;
+            for (let i = 0; i < this.users.length; i++) {
+              if (this.users[i]["user_id"] === localStorage.loggedUser) {
+                this.$toast.add({
+                  severity: "success",
+                  summary: "Welcome " + this.users[i]["first_name"],
+                  detail: "You successfully logged in",
+                  life: 3000,
+                });
+                this.users = null;
+                this.$router.push("/mainmenu");
               }
-            });
+            }
+          });
           this.$router.push("/");
         })
         .catch(() => {

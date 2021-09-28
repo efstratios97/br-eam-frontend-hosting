@@ -269,21 +269,13 @@ export default {
   methods: {
     autenticateSession() {
       if (localStorage.loggedUser && localStorage.token) {
-        this.axios
-          .get(
-            "https://br-eam-backend.herokuapp.com/user/validatetoken?token=" +
-              localStorage.token
-          )
+        this.$axios
+          .get("/user/validatetoken?token=" + localStorage.token)
           .then(() => {
             this.selected_user = localStorage.loggedUser;
-            this.axios
-              .get(
-                "https://br-eam-backend.herokuapp.com/user/" +
-                  this.selected_user
-              )
-              .then((res) => {
-                this.$store.state.loggedUser = res.data;
-              });
+            this.$axios.get("/user/" + this.selected_user).then((res) => {
+              this.$store.state.loggedUser = res.data;
+            });
           })
           .catch(() => {
             this.$router.push("/");
@@ -296,7 +288,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css");
 body {
   font-family: "Libre Baskerville", serif;

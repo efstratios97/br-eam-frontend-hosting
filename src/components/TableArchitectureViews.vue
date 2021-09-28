@@ -116,13 +116,9 @@ export default {
       } else {
         this.architecture_view_operating = true;
       }
-      this.axios
-        .delete(
-          "https://br-eam-backend.herokuapp.com/delete_architecture_view/" +
-            architecture_view_id
-        )
+      this.$axios
+        .delete("/delete_architecture_view/" + architecture_view_id)
         .then(() => {
-          this.listArchitectureViews();
           if (this.architecture_view_operating == true) {
             this.$toast.add({
               severity: "success",
@@ -133,6 +129,8 @@ export default {
           }
           this.architecture_view_operating = false;
           this.selected_architecture_view = "";
+          this.listArchitectureViews();
+          this.$emit("close");
         })
         .catch(() => {
           this.architecture_view_operating = false;
@@ -143,7 +141,6 @@ export default {
             life: 3000,
           });
           this.selected_architecture_view = "";
-          this.$emit("deleted");
         });
     },
     strToList(strings) {
@@ -151,15 +148,13 @@ export default {
       return list_string;
     },
     listArchitectureViews() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/get_architecture_views")
-        .then((res) => {
-          this.architecture_views = res.data.data;
-          this.normalizeArchitectureViews();
-          if (this.architecture_views.length === 0) {
-            this.architecture_view_loading = false;
-          }
-        });
+      this.$axios.get("/get_architecture_views").then((res) => {
+        this.architecture_views = res.data.data;
+        this.normalizeArchitectureViews();
+        if (this.architecture_views.length === 0) {
+          this.architecture_view_loading = false;
+        }
+      });
     },
   },
 };

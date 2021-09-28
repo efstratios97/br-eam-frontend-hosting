@@ -60,11 +60,8 @@ export default {
       }
     },
     getDatasetOptions() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/get_datasets_only_name/" +
-            localStorage.loggedUser
-        )
+      this.$axios
+        .get("/get_datasets_only_name/" + localStorage.loggedUser)
         .then((res) => {
           var datasets_tmp = [];
           for (let index = 0; index < res.data.data.length; index++) {

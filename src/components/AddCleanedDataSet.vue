@@ -204,25 +204,18 @@ export default {
   },
   methods: {
     getUsersOptions() {
-      this.users = this.axios
-        .get("https://br-eam-backend.herokuapp.com/users")
-        .then((res) => {
-          this.users = res.data;
-        });
+      this.users = this.$axios.get("/users").then((res) => {
+        this.users = res.data;
+      });
     },
     getDepartmentsOptions() {
-      this.users = this.axios
-        .get("https://br-eam-backend.herokuapp.com/departments")
-        .then((res) => {
-          this.departments = res.data;
-        });
+      this.users = this.$axios.get("/departments").then((res) => {
+        this.departments = res.data;
+      });
     },
     createCleanedDataSet() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/get_cleanser_by_id/" +
-            this.selected_cleanser
-        )
+      this.$axios
+        .get("/get_cleanser_by_id/" + this.selected_cleanser)
         .then((res) => {
           this.submitted = true;
           this.$toast.add({
@@ -249,9 +242,9 @@ export default {
             "access_business_unit_list",
             this.selected_departments
           );
-          this.axios
+          this.$axios
             .post(
-              "https://br-eam-backend.herokuapp.com/create_cleaned_dataset/" +
+              "/create_cleaned_dataset/" +
                 this.selected_cleanser.cleanser_id +
                 "/" +
                 this.selected_dataset.split("ID: ")[1] +
@@ -283,11 +276,8 @@ export default {
         });
     },
     getDatasetOptions() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/get_datasets_only_name/" +
-            localStorage.loggedUser
-        )
+      this.$axios
+        .get("/get_datasets_only_name/" + localStorage.loggedUser)
         .then((res) => {
           var datasets_tmp = [];
           for (let index = 0; index < res.data.data.length; index++) {
@@ -306,10 +296,9 @@ export default {
       if (this.selected_dataset === undefined) {
         this.selected_dataset = " ";
       }
-      this.axios
+      this.$axios
         .get(
-          "https://br-eam-backend.herokuapp.com/get_suitable_cleansers/" +
-            this.selected_dataset.split("ID: ")[1]
+          "/get_suitable_cleansers/" + this.selected_dataset.split("ID: ")[1]
         )
         .then((res) => {
           this.suitable_cleansers = res.data.data;

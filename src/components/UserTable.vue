@@ -103,13 +103,8 @@ export default {
         });
       }
       const issued_user = localStorage.loggedUser;
-      this.axios
-        .delete(
-          "https://br-eam-backend.herokuapp.com/delete_user/" +
-            user_id +
-            "/" +
-            issued_user
-        )
+      this.$axios
+        .delete("/delete_user/" + user_id + "/" + issued_user)
         .then(() => {
           this.listUsers();
           if (user_id === issued_user) {
@@ -160,11 +155,9 @@ export default {
       }
     },
     listUsers() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/users")
-        .then((res) => {
-          this.users = res.data;
-        });
+      this.$axios.get("/users").then((res) => {
+        this.users = res.data;
+      });
     },
     logout() {
       delete localStorage.loggedUser;
@@ -179,21 +172,13 @@ export default {
     },
     autenticateSession() {
       if (localStorage.loggedUser && localStorage.token) {
-        this.axios
-          .get(
-            "https://br-eam-backend.herokuapp.com/user/validatetoken?token=" +
-              localStorage.token
-          )
+        this.$axios
+          .get("/user/validatetoken?token=" + localStorage.token)
           .then(() => {
             this.selected_user = localStorage.loggedUser;
-            this.axios
-              .get(
-                "https://br-eam-backend.herokuapp.com/user/" +
-                  this.selected_user
-              )
-              .then((res) => {
-                this.$store.state.loggedUser = res.data;
-              });
+            this.$axios.get("/user/" + this.selected_user).then((res) => {
+              this.$store.state.loggedUser = res.data;
+            });
           })
           .catch(() => {
             this.$router.push("/");

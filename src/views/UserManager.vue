@@ -279,12 +279,7 @@ export default {
         life: 5000,
       });
       this.axios
-        .delete(
-          "https://br-eam-backend.herokuapp.com/delete_user/" +
-            issued_user +
-            "/" +
-            issued_user
-        )
+        .delete("/delete_user/" + issued_user + "/" + issued_user)
         .then(() => {
           this.logout();
           this.$toast.add({
@@ -348,21 +343,13 @@ export default {
     },
     autenticateSession() {
       if (localStorage.loggedUser && localStorage.token) {
-        this.axios
-          .get(
-            "https://br-eam-backend.herokuapp.com/user/validatetoken?token=" +
-              localStorage.token
-          )
+        this.$axios
+          .get("/user/validatetoken?token=" + localStorage.token)
           .then(() => {
             this.selected_user = localStorage.loggedUser;
-            this.axios
-              .get(
-                "https://br-eam-backend.herokuapp.com/user/" +
-                  this.selected_user
-              )
-              .then((res) => {
-                this.$store.state.loggedUser = res.data;
-              });
+            this.axios.get("/user/" + this.selected_user).then((res) => {
+              this.$store.state.loggedUser = res.data;
+            });
           })
           .catch(() => {
             this.$router.push("/");

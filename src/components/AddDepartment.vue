@@ -32,12 +32,8 @@ export default {
         dep_name: this.name,
       };
       const jsonString = JSON.stringify(this.bu);
-      this.axios
-        .post(
-          "https://br-eam-backend.herokuapp.com/create_department/" +
-            localStorage.loggedUser,
-          jsonString
-        )
+      this.$axios
+        .post("/create_department/" + localStorage.loggedUser, jsonString)
         .then(() => {
           this.$toast.add({
             severity: "success",

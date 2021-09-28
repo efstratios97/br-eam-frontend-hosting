@@ -74,13 +74,8 @@ export default {
       } else {
         this.dep_operations = true;
       }
-      this.axios
-        .delete(
-          "https://br-eam-backend.herokuapp.com/delete_department/" +
-            dep_id +
-            "/" +
-            localStorage.loggedUser
-        )
+      this.$axios
+        .delete("/delete_department/" + dep_id + "/" + localStorage.loggedUser)
         .then(() => {
           this.listDepartments();
           if (this.dep_operations === true) {
@@ -106,14 +101,12 @@ export default {
         });
     },
     listDepartments() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/departments")
-        .then((res) => {
-          this.departments = res.data;
-          if (this.departments.length === 0) {
-            this.departments_loading = false;
-          }
-        });
+      this.$axios.get("/departments").then((res) => {
+        this.departments = res.data;
+        if (this.departments.length === 0) {
+          this.departments_loading = false;
+        }
+      });
     },
   },
 };

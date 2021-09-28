@@ -121,18 +121,14 @@ export default {
   },
   methods: {
     getUsersOptions() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/users")
-        .then((res) => {
-          this.users = res.data;
-        });
+      this.$axios.get("/users").then((res) => {
+        this.users = res.data;
+      });
     },
     getDepartmentsOptions() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/departments")
-        .then((res) => {
-          this.departments = res.data;
-        });
+      this.$axios.get("/departments").then((res) => {
+        this.departments = res.data;
+      });
     },
     createDataSet() {
       this.submitted = true;
@@ -150,12 +146,8 @@ export default {
         "access_business_unit_list",
         this.selected_departments
       );
-      this.axios
-        .post(
-          "https://br-eam-backend.herokuapp.com/create_dataset?uid=" +
-            localStorage.loggedUser,
-          this.formData
-        )
+      this.$axios
+        .post("/create_dataset?uid=" + localStorage.loggedUser, this.formData)
         .then(() => {
           this.$toast.add({
             severity: "success",

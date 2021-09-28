@@ -200,13 +200,8 @@ export default {
       } else {
         this.dataset_operating = true;
       }
-      this.axios
-        .delete(
-          "https://br-eam-backend.herokuapp.com/delete_dataset/" +
-            dataset_id +
-            "/" +
-            storageType
-        )
+      this.$axios
+        .delete("/delete_dataset/" + dataset_id + "/" + storageType)
         .then(() => {
           this.listDatasets();
           if (this.dataset_operating == true) {
@@ -243,11 +238,8 @@ export default {
       this.$emit("view", dataset_id, storage_type);
     },
     listDatasets() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/get_datasets/" +
-            localStorage.loggedUser
-        )
+      this.$axios
+        .get("/get_datasets/" + localStorage.loggedUser)
         .then((res) => {
           this.datasets = this.normalize_datasets(res.data.data);
           if (this.datasets.length === 0) {
@@ -256,11 +248,9 @@ export default {
         });
     },
     listUsers() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/users")
-        .then((res) => {
-          this.users = res.data;
-        });
+      this.$axios.get("/users").then((res) => {
+        this.users = res.data;
+      });
     },
   },
 };

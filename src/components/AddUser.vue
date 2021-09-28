@@ -88,18 +88,14 @@ export default {
   },
   methods: {
     listUsers() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/users")
-        .then((res) => {
-          this.users = res.data;
-        });
+      this.$axios.get("/users").then((res) => {
+        this.users = res.data;
+      });
     },
     getDepartmentsOptions() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/departments")
-        .then((res) => {
-          this.departments = res.data;
-        });
+      this.$axios.get("/departments").then((res) => {
+        this.departments = res.data;
+      });
     },
     createUser() {
       for (let index = 0; index < this.users.length; index++) {
@@ -123,12 +119,8 @@ export default {
           role_manager: this.roleManager === true ? 1 : 0,
         };
         const jsonString = JSON.stringify(this.user);
-        this.axios
-          .post(
-            "https://br-eam-backend.herokuapp.com/create_user/" +
-              localStorage.loggedUser,
-            jsonString
-          )
+        this.$axios
+          .post("/create_user/" + localStorage.loggedUser, jsonString)
           .then(() => {
             this.$toast.add({
               severity: "success",

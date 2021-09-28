@@ -166,11 +166,8 @@ export default {
       this.showApplyCleanser = false;
     },
     updateCleansers() {
-      this.axios
-        .post(
-          "https://br-eam-backend.herokuapp.com/update_cleansers/" +
-            localStorage.loggedUser
-        )
+      this.$axios
+        .post("/update_cleansers/" + localStorage.loggedUser)
         .then(() => {
           this.refreshData();
         });
@@ -182,21 +179,13 @@ export default {
     },
     autenticateSession() {
       if (localStorage.loggedUser && localStorage.token) {
-        this.axios
-          .get(
-            "https://br-eam-backend.herokuapp.com/user/validatetoken?token=" +
-              localStorage.token
-          )
+        this.$axios
+          .get("/user/validatetoken?token=" + localStorage.token)
           .then(() => {
             this.selected_user = localStorage.loggedUser;
-            this.axios
-              .get(
-                "https://br-eam-backend.herokuapp.com/user/" +
-                  this.selected_user
-              )
-              .then((res) => {
-                this.$store.state.loggedUser = res.data;
-              });
+            this.$axios.get("/user/" + this.selected_user).then((res) => {
+              this.$store.state.loggedUser = res.data;
+            });
           })
           .catch(() => {
             this.$router.push("/");

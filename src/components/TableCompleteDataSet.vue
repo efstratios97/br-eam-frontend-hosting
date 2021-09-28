@@ -52,13 +52,8 @@ export default {
       this.$refs.dt.exportCSV();
     },
     getTableHeaders() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/get_dataset_df/" +
-            this.dataset_id +
-            "/" +
-            this.storage_type
-        )
+      this.$axios
+        .get("/get_dataset_df/" + this.dataset_id + "/" + this.storage_type)
         .then((res) => {
           const jsondf = JSON.parse(res.data);
           var row = {};

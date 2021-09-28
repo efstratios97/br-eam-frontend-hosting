@@ -59,31 +59,27 @@ export default {
   },
   methods: {
     listUsers() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/users")
-        .then((res) => {
-          var users_tmp = [];
-          this.users_complete = res.data;
-          for (let index = 0; index < res.data.length; index++) {
-            users_tmp.push({
-              user: res.data[index]["email"],
-            });
-          }
-          this.users = users_tmp;
-        });
+      this.$axios.get("/users").then((res) => {
+        var users_tmp = [];
+        this.users_complete = res.data;
+        for (let index = 0; index < res.data.length; index++) {
+          users_tmp.push({
+            user: res.data[index]["email"],
+          });
+        }
+        this.users = users_tmp;
+      });
     },
     listDepartments() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/departments")
-        .then((res) => {
-          var dep_tmp = [];
-          for (let index = 0; index < res.data.length; index++) {
-            dep_tmp.push({
-              dep: res.data[index]["name"],
-            });
-          }
-          this.departments = dep_tmp;
-        });
+      this.$axios.get("/departments").then((res) => {
+        var dep_tmp = [];
+        for (let index = 0; index < res.data.length; index++) {
+          dep_tmp.push({
+            dep: res.data[index]["name"],
+          });
+        }
+        this.departments = dep_tmp;
+      });
     },
     updateDepartment() {
       for (let index = 0; index < this.users_complete.length; index++) {
@@ -91,9 +87,9 @@ export default {
           this.selected_user.user = this.users_complete[index]["user_id"];
         }
       }
-      this.axios
+      this.$axios
         .post(
-          "https://br-eam-backend.herokuapp.com/update_department/" +
+          "/update_department/" +
             this.selected_dep.dep +
             "/" +
             this.selected_user.user

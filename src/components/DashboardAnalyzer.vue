@@ -110,8 +110,8 @@
 </template>
 
 <script>
-import BubblePlotter from "../components/PlotterBubble.vue";
-import PlotterSimpleStatistics from "../components/PlotterSimpleStatistics.vue";
+import BubblePlotter from "../components/Plots/PlotterBubble.vue";
+import PlotterSimpleStatistics from "../components/Plots/PlotterSimpleStatistics.vue";
 
 export default {
   components: {
@@ -140,21 +140,13 @@ export default {
     },
     autenticateSession() {
       if (localStorage.loggedUser && localStorage.token) {
-        this.axios
-          .get(
-            "https://br-eam-backend.herokuapp.com/user/validatetoken?token=" +
-              localStorage.token
-          )
+        this.$axios
+          .get("/user/validatetoken?token=" + localStorage.token)
           .then(() => {
             this.selected_user = localStorage.loggedUser;
-            this.axios
-              .get(
-                "https://br-eam-backend.herokuapp.com/user/" +
-                  this.selected_user
-              )
-              .then((res) => {
-                this.$store.state.loggedUser = res.data;
-              });
+            this.$axios.get("/user/" + this.selected_user).then((res) => {
+              this.$store.state.loggedUser = res.data;
+            });
           })
           .catch(() => {
             this.$router.push("/");

@@ -64,36 +64,23 @@ export default {
   },
   methods: {
     getUserMail() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/user/" + localStorage.loggedUser
-        )
-        .then((res) => {
-          this.email = res.data.email;
-        });
+      this.$axios.get("/user/" + localStorage.loggedUser).then((res) => {
+        this.email = res.data.email;
+      });
     },
     updatePassword() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/user/auth?email=" +
-            this.email +
-            "&passwd=" +
-            this.old_password
-        )
+      this.$axios
+        .get("/user/auth?email=" + this.email + "&passwd=" + this.old_password)
         .then(() => {
           if (this.new_password_2 === this.new_password_1) {
-            this.axios;
+            this.$axios;
             var password = {
               old_password: this.old_password,
               new_password: this.new_password_1,
             };
             const jsonString = JSON.stringify(password);
-            this.axios
-              .post(
-                "https://br-eam-backend.herokuapp.com/change_password/" +
-                  localStorage.loggedUser,
-                jsonString
-              )
+            this.$axios
+              .post("/change_password/" + localStorage.loggedUser, jsonString)
               .then(() => {
                 this.$toast.add({
                   severity: "success",

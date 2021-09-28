@@ -80,18 +80,14 @@ export default {
   },
   methods: {
     getUsersOptions() {
-      this.users = this.axios
-        .get("https://br-eam-backend.herokuapp.com/users")
-        .then((res) => {
-          this.users = res.data;
-        });
+      this.users = this.$axios.get("/users").then((res) => {
+        this.users = res.data;
+      });
     },
     getDepartmentsOptions() {
-      this.users = this.axios
-        .get("https://br-eam-backend.herokuapp.com/departments")
-        .then((res) => {
-          this.departments = res.data;
-        });
+      this.users = this.$axios.get("/departments").then((res) => {
+        this.departments = res.data;
+      });
     },
     createDataSet() {
       this.formData = new FormData();
@@ -108,34 +104,23 @@ export default {
         "access_business_unit_list",
         this.selected_departments
       );
-      this.axios
-        .post(
-          "https://br-eam-backend.herokuapp.com/create_dataset?uid=" +
-            localStorage.loggedUser,
-          this.formData
-        )
+      this.$axios
+        .post("/create_dataset?uid=" + localStorage.loggedUser, this.formData)
         .then(() => {
           this.$emit("close");
         });
     },
     getDatasetOptions() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/get_datasets_only_id/" +
-            localStorage.loggedUser
-        )
+      this.$axios
+        .get("/get_datasets_only_id/" + localStorage.loggedUser)
         .then((res) => {
           this.datasets = res.data.data;
         });
     },
     getCleanserOperationTypesOptions() {
-      this.axios
-        .get(
-          "https://br-eam-backend.herokuapp.com/get_cleanser_operation_types"
-        )
-        .then((res) => {
-          this.cleanser_operation_types = res.data.data[0];
-        });
+      this.$axios.get("/get_cleanser_operation_types").then((res) => {
+        this.cleanser_operation_types = res.data.data[0];
+      });
     },
     createCleanser() {
       this.formData = new FormData();
@@ -146,11 +131,8 @@ export default {
         "cleanser_operation_types",
         this.selected_cleanser_operation_types
       );
-      this.axios
-        .post(
-          "https://br-eam-backend.herokuapp.com/create_cleanser",
-          this.formData
-        )
+      this.$axios
+        .post("/create_cleanser", this.formData)
         .then(() => {
           this.$toast.add({
             severity: "success",

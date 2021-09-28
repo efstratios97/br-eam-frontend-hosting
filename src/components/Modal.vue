@@ -27,7 +27,7 @@
         </button>
         <div class="modal__circle"></div>
         <img
-          src="http://www.ard.de/image/526888/16x9/4788494886555702765/1280"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/BR_Dachmarke.svg/2000px-BR_Dachmarke.svg.png"
           class="modal__product"
         />
       </div>

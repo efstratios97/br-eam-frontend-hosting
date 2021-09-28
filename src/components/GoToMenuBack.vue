@@ -63,19 +63,17 @@ export default {
   },
   methods: {
     enumUser() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/users")
-        .then((res) => {
-          this.allUsers = res.data;
-          for (let i = 0; i < this.allUsers.length; i++) {
-            if (this.allUsers[i]["user_id"] === localStorage.loggedUser) {
-              this.user = this.allUsers[i]["first_name"];
-              return;
-            } else {
-              this.user = false;
-            }
+      this.$axios.get("/users").then((res) => {
+        this.allUsers = res.data;
+        for (let i = 0; i < this.allUsers.length; i++) {
+          if (this.allUsers[i]["user_id"] === localStorage.loggedUser) {
+            this.user = this.allUsers[i]["first_name"];
+            return;
+          } else {
+            this.user = false;
           }
-        });
+        }
+      });
     },
     logout() {
       delete localStorage.loggedUser;
@@ -90,21 +88,13 @@ export default {
     },
     autenticateSession() {
       if (localStorage.loggedUser && localStorage.token) {
-        this.axios
-          .get(
-            "https://br-eam-backend.herokuapp.com/user/validatetoken?token=" +
-              localStorage.token
-          )
+        this.$axios
+          .get("/user/validatetoken?token=" + localStorage.token)
           .then(() => {
             this.selected_user = localStorage.loggedUser;
-            this.axios
-              .get(
-                "https://br-eam-backend.herokuapp.com/user/" +
-                  this.selected_user
-              )
-              .then((res) => {
-                this.$store.state.loggedUser = res.data;
-              });
+            this.$axios.get("/user/" + this.selected_user).then((res) => {
+              this.$store.state.loggedUser = res.data;
+            });
           })
           .catch(() => {
             this.$router.push("/");

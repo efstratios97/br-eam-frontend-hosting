@@ -123,10 +123,8 @@ export default {
       } else {
         this.cleanser_operating = true;
       }
-      this.axios
-        .delete(
-          "https://br-eam-backend.herokuapp.com/delete_cleanser/" + cleanser_id
-        )
+      this.$axios
+        .delete("/delete_cleanser/" + cleanser_id)
         .then(() => {
           this.listCleansers();
           if (this.cleanser_operating == true) {
@@ -156,15 +154,13 @@ export default {
       return list_string;
     },
     listCleansers() {
-      this.axios
-        .get("https://br-eam-backend.herokuapp.com/get_cleansers")
-        .then((res) => {
-          this.cleansers = res.data.data;
-          this.normalizeCleanser();
-          if (this.cleansers.length === 0) {
-            this.cleansers_loading = false;
-          }
-        });
+      this.$axios.get("/get_cleansers").then((res) => {
+        this.cleansers = res.data.data;
+        this.normalizeCleanser();
+        if (this.cleansers.length === 0) {
+          this.cleansers_loading = false;
+        }
+      });
     },
   },
 };
