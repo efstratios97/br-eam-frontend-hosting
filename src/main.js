@@ -62,7 +62,7 @@ const store = createStore({
 })
 const instance = axios.create({
     // baseURL: process.env.NODE_ENV == 'development' ? '' : ''
-    baseURL: 'http://localhost:8081',
+    baseURL: 'https://br-eam-backend.herokuapp.com',
     timeout: 60 * 4 * 1000
 });
 const app = createApp(App)
