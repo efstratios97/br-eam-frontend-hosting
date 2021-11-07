@@ -129,7 +129,7 @@
     <br />
     <Card>
       <template v-slot:title> Heatmap Plot</template>
-      <template v-slot:subtitle> View made by Python </template>
+      <template v-slot:subtitle> View powered by Python </template>
       <template v-slot:content>
         <div class="container">
           <div class="row">
@@ -196,6 +196,15 @@ export default {
             let t = document.createTextNode(response.data.script);
             bokehRunScript.appendChild(t);
             document.body.appendChild(bokehRunScript);
+          })
+          .catch(() => {
+            this.$toast.add({
+              severity: "error",
+              summary: "Not suitable Dataset",
+              detail:
+                "The chosen Dataset is not suitable for this data analysis",
+              life: 5000,
+            });
           });
       };
     },

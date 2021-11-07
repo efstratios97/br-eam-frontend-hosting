@@ -117,7 +117,7 @@
     <br />
     <Card>
       <template v-slot:title> Statistics Plot</template>
-      <template v-slot:subtitle> View made by Python </template>
+      <template v-slot:subtitle> View powered by Python </template>
       <template v-slot:content>
         <div class="container">
           <div class="row">
@@ -185,6 +185,15 @@ export default {
             document.body.appendChild(bokehRunScript);
             // Close the wait screen after the drawing code is executed
             // _this.loading = false;
+          })
+          .catch(() => {
+            this.$toast.add({
+              severity: "error",
+              summary: "Not suitable Dataset",
+              detail:
+                "The chosen Dataset is not suitable for this data analysis",
+              life: 5000,
+            });
           });
       };
     },

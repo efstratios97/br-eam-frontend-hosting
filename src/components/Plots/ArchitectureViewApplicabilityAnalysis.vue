@@ -181,8 +181,8 @@ export default {
           this.architecture_views_all[index].name ===
           this.selected_architecture_view.architecture_view
         ) {
-          selected_architecture_view = this.architecture_views_all[index]
-            .architecture_view_id;
+          selected_architecture_view =
+            this.architecture_views_all[index].architecture_view_id;
         }
       }
       this.$axios
@@ -242,7 +242,7 @@ export default {
         .then((res) => {
           var data_tmp = [{ dep: "All" }];
           for (let index = 0; index < res.data.data.length; index++) {
-            if (res.data.data[index] !== null) {
+            if (res.data.data[index] !== "") {
               data_tmp.push({ dep: res.data.data[index] });
             }
           }
