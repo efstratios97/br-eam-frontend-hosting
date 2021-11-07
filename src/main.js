@@ -69,7 +69,7 @@ const store = createStore({
 })
 const instance = axios.create({
     // baseURL: process.env.NODE_ENV == 'development' ? '' : ''
-    baseURL: 'https://br-eam-backend.herokuapp.com',// 'http://it-eamtoolt-01:8081''http://10.20.20.133:5000' https://br-eam-backend.herokuapp.com/user/auth?email=tetet&passwd=tete4
+    baseURL: 'https://br-eam-backend-hosting.herokuapp.com',// 'http://it-eamtoolt-01:8081''http://10.20.20.133:5000' https://br-eam-backend.herokuapp.com/user/auth?email=tetet&passwd=tete4
     timeout: 60 * 4 * 1000
 });
 const app = createApp(App)
